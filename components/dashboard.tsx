@@ -142,19 +142,17 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen bg-teal-25 w-full overflow-hidden">
+      <div className="flex min-h-screen bg-teal-25 w-full overflow-hidden relative">
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            className="mobile-menu-overlay lg:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           />
         )}
 
-        {/* Sidebar - hidden on mobile, visible on desktop */}
-        <div className={`fixed lg:relative lg:block lg:w-80 xl:w-96 flex-shrink-0 z-50 transition-transform duration-300 ${
-          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        }`}>
+        {/* Sidebar - fixed on mobile, relative on desktop */}
+        <div className={`mobile-sidebar lg:relative lg:block lg:w-80 xl:w-96 flex-shrink-0 ${isMobileMenuOpen ? 'open' : ''}`}>
           <DashboardSidebar
             language={language}
             onLogout={onLogout}
@@ -165,7 +163,7 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
         </div>
 
         {/* Main content area */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 w-full">
           <DashboardHeader
             userRole={userRole}
             userName={userName}

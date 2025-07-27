@@ -41,7 +41,8 @@ export default function DashboardHeader({
             variant="ghost"
             size="sm"
             onClick={onMobileMenuToggle}
-            className="lg:hidden text-gray-700 hover:bg-teal-50"
+            className="lg:hidden text-gray-700 hover:bg-teal-50 p-2 h-10 w-10"
+            aria-label="Toggle mobile menu"
           >
             <Menu className="h-5 w-5" />
           </Button>

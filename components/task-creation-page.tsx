@@ -110,21 +110,21 @@ export default function TaskCreationPage({ language, onAddTask }: TaskCreationPa
   }
 
   return (
-    <div className="w-[67vw] ml-[1vw] mr-[1vw] h-full bg-teal-25 flex items-center justify-center p-6">
+    <div className="w-full h-full bg-teal-25 flex items-center justify-center p-3 sm:p-6">
       <div className="w-full h-full flex items-center justify-center">
         <Card className="shadow-lg border-0 bg-white w-full max-w-4xl">
           <CardHeader className="bg-gradient-to-r from-teal-400 to-teal-500 text-white rounded-t-lg">
-            <CardTitle className="flex items-center justify-center space-x-3 text-xl">
-              <Plus className="h-6 w-6" />
+            <CardTitle className="flex items-center justify-center space-x-2 sm:space-x-3 text-lg sm:text-xl">
+              <Plus className="h-5 w-5 sm:h-6 sm:w-6" />
               <span>{t.title}</span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-8 bg-white">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-3">
+          <CardContent className="p-4 sm:p-8 bg-white">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+              <div className="space-y-2 sm:space-y-3">
                 <Label
                   htmlFor="description"
-                  className="text-gray-900 font-semibold text-base flex items-center space-x-2"
+                  className="text-gray-900 font-semibold text-sm sm:text-base flex items-center space-x-2"
                 >
                   <FileText className="h-4 w-4" />
                   <span>{t.description}</span>
@@ -135,13 +135,13 @@ export default function TaskCreationPage({ language, onAddTask }: TaskCreationPa
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
-                  className="min-h-[120px] border-gray-300 focus:border-teal-400 focus:ring-teal-400 text-base bg-white text-gray-900"
+                  className="min-h-[100px] sm:min-h-[120px] border-gray-300 focus:border-teal-400 focus:ring-teal-400 text-sm sm:text-base bg-white text-gray-900"
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <Label className="text-gray-900 font-semibold text-base flex items-center space-x-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-2 sm:space-y-3">
+                  <Label className="text-gray-900 font-semibold text-sm sm:text-base flex items-center space-x-2">
                     <Building className="h-4 w-4" />
                     <span>{t.department}</span>
                   </Label>
@@ -149,7 +149,7 @@ export default function TaskCreationPage({ language, onAddTask }: TaskCreationPa
                     value={department}
                     onValueChange={(value: "housekeeping" | "kitchen" | "maintenance") => setDepartment(value)}
                   >
-                    <SelectTrigger className="h-12 border-gray-300 focus:border-teal-400 focus:ring-teal-400 bg-white text-gray-900">
+                    <SelectTrigger className="h-10 sm:h-12 border-gray-300 focus:border-teal-400 focus:ring-teal-400 bg-white text-gray-900">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-white">
@@ -175,13 +175,13 @@ export default function TaskCreationPage({ language, onAddTask }: TaskCreationPa
                   </Select>
                 </div>
 
-                <div className="space-y-3">
-                  <Label className="text-gray-900 font-semibold text-base flex items-center space-x-2">
+                <div className="space-y-2 sm:space-y-3">
+                  <Label className="text-gray-900 font-semibold text-sm sm:text-base flex items-center space-x-2">
                     <AlertCircle className="h-4 w-4" />
                     <span>{t.urgency}</span>
                   </Label>
                   <Select value={urgency} onValueChange={(value: "urgent" | "standard") => setUrgency(value)}>
-                    <SelectTrigger className="h-12 border-gray-200 focus:border-teal-400 focus:ring-teal-400">
+                    <SelectTrigger className="h-10 sm:h-12 border-gray-200 focus:border-teal-400 focus:ring-teal-400">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -192,10 +192,10 @@ export default function TaskCreationPage({ language, onAddTask }: TaskCreationPa
                 </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <Label
                   htmlFor="guestContact"
-                  className="text-gray-900 font-semibold text-base flex items-center space-x-2"
+                  className="text-gray-900 font-semibold text-sm sm:text-base flex items-center space-x-2"
                 >
                   <Phone className="h-4 w-4" />
                   <span>{t.guestContact}</span>
@@ -206,15 +206,15 @@ export default function TaskCreationPage({ language, onAddTask }: TaskCreationPa
                   value={guestContact}
                   onChange={(e) => setGuestContact(e.target.value)}
                   required
-                  className="h-12 border-gray-300 focus:border-teal-400 focus:ring-teal-400 text-base bg-white text-gray-900"
+                  className="h-10 sm:h-12 border-gray-300 focus:border-teal-400 focus:ring-teal-400 text-sm sm:text-base bg-white text-gray-900"
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full h-14 bg-teal-500 hover:bg-teal-600 text-white text-lg font-semibold rounded-lg transition-colors"
+                className="w-full h-12 sm:h-14 bg-teal-500 hover:bg-teal-600 text-white text-base sm:text-lg font-semibold rounded-lg transition-colors"
               >
-                <Plus className="h-5 w-5 mr-2" />
+                <Plus className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 {t.submit}
               </Button>
             </form>

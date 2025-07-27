@@ -122,12 +122,12 @@ export default function QuickChat({ language }: QuickChatProps) {
     <>
       {/* Chat Bubble */}
       {!isOpen && (
-        <div className="fixed bottom-6 right-6 z-50">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
           <Button
             onClick={() => setIsOpen(true)}
-            className="w-14 h-14 rounded-full bg-teal-500 hover:bg-teal-600 shadow-lg hover:shadow-xl transition-all duration-300"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-teal-500 hover:bg-teal-600 shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <MessageSquare className="h-6 w-6 text-white" />
+            <MessageSquare className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
           </Button>
         </div>
       )}
@@ -135,20 +135,20 @@ export default function QuickChat({ language }: QuickChatProps) {
       {/* Chat Interface */}
       {isOpen && (
         <div
-          className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
-            isMinimized ? "h-14" : "h-96"
-          } w-80 animate-slideInUp`}
+          className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 transition-all duration-300 ${
+            isMinimized ? "h-12 sm:h-14" : "h-80 sm:h-96"
+          } w-72 sm:w-80 animate-slideInUp`}
         >
           <Card className="h-full shadow-2xl border-2 border-teal-200 bg-white">
             {/* Chat Header */}
-            <CardHeader className="bg-gradient-to-r from-teal-400 to-teal-500 text-white p-3 rounded-t-lg">
+            <CardHeader className="bg-gradient-to-r from-teal-400 to-teal-500 text-white p-2 sm:p-3 rounded-t-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                    <User className="h-4 w-4" />
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/20 rounded-full flex items-center justify-center">
+                    <User className="h-3 w-3 sm:h-4 sm:w-4" />
                   </div>
                   <div>
-                    <CardTitle className="text-sm font-semibold">{t.chatWithManager}</CardTitle>
+                    <CardTitle className="text-xs sm:text-sm font-semibold">{t.chatWithManager}</CardTitle>
                     <p className="text-xs text-teal-100">{t.online}</p>
                   </div>
                 </div>
@@ -157,26 +157,26 @@ export default function QuickChat({ language }: QuickChatProps) {
                     variant="ghost"
                     size="sm"
                     onClick={handleEndChat}
-                    className="h-6 w-6 p-0 text-white hover:bg-red-500/20"
+                    className="h-5 w-5 sm:h-6 sm:w-6 p-0 text-white hover:bg-red-500/20"
                     title={t.endChat}
                   >
-                    <PhoneOff className="h-3 w-3" />
+                    <PhoneOff className="h-2 w-2 sm:h-3 sm:w-3" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsMinimized(!isMinimized)}
-                    className="h-6 w-6 p-0 text-white hover:bg-white/20"
+                    className="h-5 w-5 sm:h-6 sm:w-6 p-0 text-white hover:bg-white/20"
                   >
-                    <Minimize2 className="h-3 w-3" />
+                    <Minimize2 className="h-2 w-2 sm:h-3 sm:w-3" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsOpen(false)}
-                    className="h-6 w-6 p-0 text-white hover:bg-white/20"
+                    className="h-5 w-5 sm:h-6 sm:w-6 p-0 text-white hover:bg-white/20"
                   >
-                    <X className="h-3 w-3" />
+                    <X className="h-2 w-2 sm:h-3 sm:w-3" />
                   </Button>
                 </div>
               </div>
@@ -186,11 +186,11 @@ export default function QuickChat({ language }: QuickChatProps) {
             {!isMinimized && (
               <CardContent className="p-0 flex flex-col h-full">
                 {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-3 space-y-3 max-h-64">
+                <div className="flex-1 overflow-y-auto p-2 sm:p-3 space-y-2 sm:space-y-3 max-h-56 sm:max-h-64">
                   {messages.map((msg) => (
                     <div key={msg.id} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                       <div
-                        className={`max-w-[80%] p-2 rounded-lg text-sm ${
+                        className={`max-w-[85%] p-2 rounded-lg text-xs sm:text-sm ${
                           msg.sender === "user"
                             ? "bg-teal-500 text-white rounded-br-none"
                             : "bg-gray-100 text-gray-900 rounded-bl-none"
@@ -206,19 +206,19 @@ export default function QuickChat({ language }: QuickChatProps) {
                 </div>
 
                 {/* Message Input */}
-                <div className="p-3 border-t border-gray-200">
+                <div className="p-2 sm:p-3 border-t border-gray-200">
                   <div className="flex space-x-2">
                     <Input
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder={t.typeMessage}
-                      className="flex-1 h-9 text-sm border-gray-300 focus:border-teal-400 focus:ring-teal-400"
+                      className="flex-1 h-8 sm:h-9 text-xs sm:text-sm border-gray-300 focus:border-teal-400 focus:ring-teal-400"
                     />
                     <Button
                       onClick={handleSendMessage}
                       disabled={!message.trim()}
-                      className="h-9 px-3 bg-teal-500 hover:bg-teal-600 text-white"
+                      className="h-8 w-8 sm:h-9 sm:w-9 px-2 sm:px-3 bg-teal-500 hover:bg-teal-600 text-white"
                     >
                       <Send className="h-3 w-3" />
                     </Button>

@@ -85,6 +85,7 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
   const [language, setLanguage] = useState<"en" | "ka">("en")
   const [currentPage, setCurrentPage] = useState<"dashboard" | "create-task" | "view-tasks">("create-task")
   const [taskCounter, setTaskCounter] = useState(sampleTasks.length)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const addTask = (newTask: Omit<Task, "id" | "createdAt">) => {
     const newTaskCounter = taskCounter + 1
@@ -106,6 +107,11 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
     setLanguage(language === "en" ? "ka" : "en")
   }
 
+  const handlePageChange = (page: "dashboard" | "create-task" | "view-tasks") => {
+    setCurrentPage(page)
+    setIsMobileMenuOpen(false) // Close mobile menu when page changes
+  }
+
   const renderCurrentPage = () => {
     switch (currentPage) {
       case "create-task":
@@ -117,14 +123,14 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
         return userRole === "manager" ? (
           <Analytics tasks={tasks} language={language} />
         ) : (
-          <div className="flex items-center justify-center text-center p-12 bg-white rounded-lg shadow-lg max-w-2xl border-2 border-teal-200 min-h-[60vh] flex-col gap-y-[] mx-auto my-20 animate-slideInUp">
+          <div className="flex items-center justify-center text-center p-6 sm:p-12 bg-white rounded-lg shadow-lg max-w-2xl border-2 border-teal-200 min-h-[60vh] flex-col gap-y-4 mx-auto my-8 sm:my-20 animate-slideInUp">
             <div className="mb-6">
-              <img src="/images/logo.png" alt="HostiTask Logo" className="w-20 h-20 mx-auto mb-4 rounded-2xl" />
+              <img src="/images/logo.png" alt="HostiTask Logo" className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-2xl" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
               {language === "en" ? "Welcome to HostiTask" : "კეთილი იყოს თქვენი მობრძანება HostiTask-ში"}
             </h2>
-            <p className="text-gray-700">
+            <p className="text-sm sm:text-base text-gray-700 px-4">
               {language === "en"
                 ? "Use the sidebar to navigate to create tasks or view existing tasks."
                 : "გამოიყენეთ გვერდითი პანელი დავალებების შესაქმნელად ან არსებული დავალებების სანახავად."}
@@ -136,23 +142,36 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen bg-teal-25 w-screen overflow-hidden">
-        <div className="w-[30vw] flex-shrink-0">
+      <div className="flex min-h-screen bg-teal-25 w-full overflow-hidden">
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+
+        {/* Sidebar - hidden on mobile, visible on desktop */}
+        <div className={`fixed lg:relative lg:block lg:w-80 xl:w-96 flex-shrink-0 z-50 transition-transform duration-300 ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        }`}>
           <DashboardSidebar
             language={language}
             onLogout={onLogout}
             currentPage={currentPage}
-            onPageChange={setCurrentPage}
+            onPageChange={handlePageChange}
             userRole={userRole}
           />
         </div>
 
-        <div className="w-[70vw] flex flex-col flex-shrink-0">
+        {/* Main content area */}
+        <div className="flex-1 flex flex-col min-w-0">
           <DashboardHeader
             userRole={userRole}
             userName={userName}
             language={language}
             onToggleLanguage={toggleLanguage}
+            onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           />
 
           <main className="flex-1 bg-teal-25 overflow-auto animate-fadeIn relative">

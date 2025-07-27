@@ -4,24 +4,9 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'HostiTask - Hotel Management System',
-  description: 'A comprehensive hotel task management system for front desk and management staff',
+  title: 'v0 App',
+  description: 'Created with v0',
   generator: 'v0.dev',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-  themeColor: '#0d9488',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'HostiTask',
-  },
-  formatDetection: {
-    telephone: false,
-  },
 }
 
 export default function RootLayout({
@@ -32,12 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <meta name="theme-color" content="#0d9488" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="HostiTask" />
-        <meta name="format-detection" content="telephone=no" />
         <style>{`
 html {
   font-family: ${GeistSans.style.fontFamily};
@@ -46,7 +25,7 @@ html {
 }
         `}</style>
       </head>
-      <body className="antialiased">{children}</body>
+      <body>{children}</body>
     </html>
   )
 }

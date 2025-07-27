@@ -85,7 +85,7 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
   const [language, setLanguage] = useState<"en" | "ka">("en")
   const [currentPage, setCurrentPage] = useState<"dashboard" | "create-task" | "view-tasks">("create-task")
   const [taskCounter, setTaskCounter] = useState(sampleTasks.length)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false) // NEW
 
   const addTask = (newTask: Omit<Task, "id" | "createdAt">) => {
     const newTaskCounter = taskCounter + 1
@@ -94,7 +94,6 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
       id: newTaskCounter.toString(),
       createdAt: new Date(),
     }
-    // Add new tasks to the end of the list, not the beginning
     setTasks([...tasks, task])
     setTaskCounter(newTaskCounter)
   }
@@ -105,11 +104,6 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
 
   const toggleLanguage = () => {
     setLanguage(language === "en" ? "ka" : "en")
-  }
-
-  const handlePageChange = (page: "dashboard" | "create-task" | "view-tasks") => {
-    setCurrentPage(page)
-    setIsMobileMenuOpen(false) // Close mobile menu when page changes
   }
 
   const renderCurrentPage = () => {
@@ -123,14 +117,14 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
         return userRole === "manager" ? (
           <Analytics tasks={tasks} language={language} />
         ) : (
-          <div className="flex items-center justify-center text-center p-6 sm:p-12 bg-white rounded-lg shadow-lg max-w-2xl border-2 border-teal-200 min-h-[60vh] flex-col gap-y-4 mx-auto my-8 sm:my-20 animate-slideInUp">
+          <div className="flex items-center justify-center text-center p-12 bg-white rounded-lg shadow-lg max-w-2xl border-2 border-teal-200 min-h-[60vh] flex-col gap-y-[] mx-auto my-20 animate-slideInUp">
             <div className="mb-6">
-              <img src="/images/logo.png" alt="HostiTask Logo" className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-2xl" />
+              <img src="/images/logo.png" alt="HostiTask Logo" className="w-20 h-20 mx-auto mb-4 rounded-2xl" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "en" ? "Welcome to HostiTask" : "კეთილი იყოს თქვენი მობრძანება HostiTask-ში"}
             </h2>
-            <p className="text-sm sm:text-base text-gray-700 px-4">
+            <p className="text-gray-700">
               {language === "en"
                 ? "Use the sidebar to navigate to create tasks or view existing tasks."
                 : "გამოიყენეთ გვერდითი პანელი დავალებების შესაქმნელად ან არსებული დავალებების სანახავად."}
@@ -142,34 +136,56 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen bg-teal-25 w-full overflow-hidden relative">
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <div 
-            className="mobile-menu-overlay lg:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-
-        {/* Sidebar - fixed on mobile, relative on desktop */}
-        <div className={`mobile-sidebar lg:relative lg:block lg:w-80 xl:w-96 flex-shrink-0 ${isMobileMenuOpen ? 'open' : ''}`}>
+      <div className="flex min-h-screen bg-teal-25 w-screen overflow-hidden relative">
+        {/* Sidebar: hidden on small screens, toggled with sidebarOpen */}
+        <div
+          className={`
+            fixed z-30 inset-y-0 left-0
+            w-[70vw] max-w-xs bg-white shadow-lg transition-transform duration-300
+            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+            md:static md:translate-x-0 md:w-[30vw] md:max-w-none md:shadow-none
+            flex-shrink-0
+          `}
+        >
           <DashboardSidebar
             language={language}
             onLogout={onLogout}
             currentPage={currentPage}
-            onPageChange={handlePageChange}
+            onPageChange={(page) => {
+              setCurrentPage(page)
+              setSidebarOpen(false) // Close sidebar on mobile after navigation
+            }}
             userRole={userRole}
           />
         </div>
 
-        {/* Main content area */}
-        <div className="flex-1 flex flex-col min-w-0 w-full">
+        {/* Overlay for mobile sidebar */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-30 z-20 md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
+        <div className="flex flex-col flex-shrink-0 w-full md:w-[70vw] ml-0 md:ml-0">
+          {/* Header with menu button on mobile */}
+          <div className="md:hidden flex items-center p-4 bg-white shadow">
+            <button
+              className="mr-4 text-teal-600 focus:outline-none"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open sidebar"
+            >
+              <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 7h20M4 14h20M4 21h20" />
+              </svg>
+            </button>
+            <span className="font-bold text-lg flex-1">{language === "en" ? "HostiTask" : "ჰოსტიTask"}</span>
+          </div>
           <DashboardHeader
             userRole={userRole}
             userName={userName}
             language={language}
             onToggleLanguage={toggleLanguage}
-            onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           />
 
           <main className="flex-1 bg-teal-25 overflow-auto animate-fadeIn relative">
@@ -179,5 +195,3 @@ export default function Dashboard({ userRole, userName, onLogout }: DashboardPro
         </div>
       </div>
     </SidebarProvider>
-  )
-}

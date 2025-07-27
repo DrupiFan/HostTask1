@@ -129,14 +129,14 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
     }
 
     const config = statusConfig[status]
-    return <Badge className={`${config.color} border font-medium text-xs`}>{config.text}</Badge>
+    return <Badge className={`${config.color} border font-medium`}>{config.text}</Badge>
   }
 
   const getUrgencyBadge = (urgency: Task["urgency"]) => {
     return urgency === "urgent" ? (
-      <Badge className="bg-red-500 text-white border-red-600 border font-medium animate-pulse text-xs">{t.urgent}</Badge>
+      <Badge className="bg-red-500 text-white border-red-600 border font-medium animate-pulse">{t.urgent}</Badge>
     ) : (
-      <Badge className="bg-gray-100 text-gray-800 border-gray-200 border font-medium text-xs">{t.standard}</Badge>
+      <Badge className="bg-gray-100 text-gray-800 border-gray-200 border font-medium">{t.standard}</Badge>
     )
   }
 
@@ -210,40 +210,40 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6 bg-teal-25 min-h-screen p-3 sm:p-6 w-full">
+    <div className="space-y-6 bg-teal-25 min-h-screen p-6 w-[67vw] ml-[1vw] mr-[1vw]">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="bg-white border-2 border-teal-200 shadow-lg">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <ClipboardList className="h-6 w-6 sm:h-8 sm:w-8 text-teal-500" />
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <ClipboardList className="h-8 w-8 text-teal-500" />
               <div>
-                <p className="text-xs sm:text-sm text-gray-700 font-medium">{t.totalTasks}</p>
-                <p className="text-lg sm:text-2xl font-bold text-gray-900">{stats.total}</p>
+                <p className="text-sm text-gray-700 font-medium">{t.totalTasks}</p>
+                <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card className="bg-white border-2 border-red-200 shadow-lg">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <AlertTriangle className="h-6 w-6 sm:h-8 sm:w-8 text-red-600" />
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <AlertTriangle className="h-8 w-8 text-red-600" />
               <div>
-                <p className="text-xs sm:text-sm text-gray-700 font-medium">{t.urgentTasks}</p>
-                <p className="text-lg sm:text-2xl font-bold text-red-600">{stats.urgent}</p>
+                <p className="text-sm text-gray-700 font-medium">{t.urgentTasks}</p>
+                <p className="text-2xl font-bold text-red-600">{stats.urgent}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white border-2 border-teal-200 shadow-lg sm:col-span-2 lg:col-span-1">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-600" />
+        <Card className="bg-white border-2 border-teal-200 shadow-lg">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <CheckCircle className="h-8 w-8 text-green-600" />
               <div>
-                <p className="text-xs sm:text-sm text-gray-700 font-medium">{t.completedTasks}</p>
-                <p className="text-lg sm:text-2xl font-bold text-gray-900">{stats.completed}</p>
+                <p className="text-sm text-gray-700 font-medium">{t.completedTasks}</p>
+                <p className="text-2xl font-bold text-gray-900">{stats.completed}</p>
               </div>
             </div>
           </CardContent>
@@ -253,27 +253,27 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
       {/* Main Task List */}
       <Card className="shadow-lg border-0 bg-white">
         <CardHeader className="bg-gradient-to-r from-teal-400 to-teal-500 text-white rounded-t-lg">
-          <CardTitle className="flex items-center space-x-2 sm:space-x-3 text-lg sm:text-xl">
-            <Filter className="h-5 w-5 sm:h-6 sm:w-6" />
+          <CardTitle className="flex items-center space-x-3 text-xl">
+            <Filter className="h-6 w-6" />
             <span>{t.title}</span>
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="p-3 sm:p-6 bg-white">
+        <CardContent className="p-6 bg-white">
           {/* Filters */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
                 placeholder={t.search}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-9 sm:h-11 border-gray-200 focus:border-teal-400 focus:ring-teal-400 text-sm"
+                className="pl-10 h-11 border-gray-200 focus:border-teal-400 focus:ring-teal-400"
               />
             </div>
 
             <Select value={filterDepartment} onValueChange={setFilterDepartment}>
-              <SelectTrigger className="h-9 sm:h-11 border-gray-200 focus:border-teal-400 focus:ring-teal-400">
+              <SelectTrigger className="h-11 border-gray-200 focus:border-teal-400 focus:ring-teal-400">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -285,7 +285,7 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
             </Select>
 
             <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="h-9 sm:h-11 border-gray-200 focus:border-teal-400 focus:ring-teal-400">
+              <SelectTrigger className="h-11 border-gray-200 focus:border-teal-400 focus:ring-teal-400">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -298,7 +298,7 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
             </Select>
 
             <Select value={sortBy} onValueChange={(value: "urgency" | "status" | "date") => setSortBy(value)}>
-              <SelectTrigger className="h-9 sm:h-11 border-gray-200 focus:border-teal-400 focus:ring-teal-400">
+              <SelectTrigger className="h-11 border-gray-200 focus:border-teal-400 focus:ring-teal-400">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -311,22 +311,22 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
 
           {/* Task List */}
           {filteredAndSortedTasks.length === 0 ? (
-            <div className="text-center py-8 sm:py-12 text-gray-500">
-              <ClipboardList className="h-8 w-8 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 text-gray-300" />
-              <p className="text-sm sm:text-lg">{t.noTasks}</p>
+            <div className="text-center py-12 text-gray-500">
+              <ClipboardList className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+              <p className="text-lg">{t.noTasks}</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[800px]">
+              <table className="w-full">
                 <thead>
                   <tr className="border-b-2 border-gray-100">
-                    <th className="text-left p-2 sm:p-4 font-semibold text-gray-700 text-xs sm:text-sm">{t.id}</th>
-                    <th className="text-left p-2 sm:p-4 font-semibold text-gray-700 text-xs sm:text-sm">{t.description}</th>
-                    <th className="text-left p-2 sm:p-4 font-semibold text-gray-700 text-xs sm:text-sm">{t.department}</th>
-                    <th className="text-left p-2 sm:p-4 font-semibold text-gray-700 text-xs sm:text-sm">{t.urgency}</th>
-                    <th className="text-left p-2 sm:p-4 font-semibold text-gray-700 text-xs sm:text-sm">{t.status}</th>
-                    <th className="text-left p-2 sm:p-4 font-semibold text-gray-700 text-xs sm:text-sm">{t.assignedTo}</th>
-                    <th className="text-left p-2 sm:p-4 font-semibold text-gray-700 text-xs sm:text-sm">{t.actions}</th>
+                    <th className="text-left p-4 font-semibold text-gray-700">{t.id}</th>
+                    <th className="text-left p-4 font-semibold text-gray-700">{t.description}</th>
+                    <th className="text-left p-4 font-semibold text-gray-700">{t.department}</th>
+                    <th className="text-left p-4 font-semibold text-gray-700">{t.urgency}</th>
+                    <th className="text-left p-4 font-semibold text-gray-700">{t.status}</th>
+                    <th className="text-left p-4 font-semibold text-gray-700">{t.assignedTo}</th>
+                    <th className="text-left p-4 font-semibold text-gray-700">{t.actions}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -341,23 +341,23 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
                             : "bg-gray-50"
                       }`}
                     >
-                      <td className="p-2 sm:p-4 font-mono text-xs sm:text-sm text-gray-700">#{task.id}</td>
-                      <td className="p-2 sm:p-4 max-w-[150px] sm:max-w-xs">
-                        <div className="truncate font-medium text-gray-900 text-xs sm:text-sm">{task.description}</div>
+                      <td className="p-4 font-mono text-sm text-gray-700">#{task.id}</td>
+                      <td className="p-4 max-w-xs">
+                        <div className="truncate font-medium text-gray-900">{task.description}</div>
                       </td>
-                      <td className="p-2 sm:p-4 text-gray-700 flex items-center space-x-1 sm:space-x-2">
+                      <td className="p-4 text-gray-700 flex items-center space-x-2">
                         <DepartmentIcon department={task.department} />
-                        <span className="text-xs sm:text-sm">{getDepartmentName(task.department)}</span>
+                        <span>{getDepartmentName(task.department)}</span>
                       </td>
-                      <td className="p-2 sm:p-4">{getUrgencyBadge(task.urgency)}</td>
-                      <td className="p-2 sm:p-4">{getStatusBadge(task.status)}</td>
-                      <td className="p-2 sm:p-4 text-xs sm:text-sm text-gray-700">
+                      <td className="p-4">{getUrgencyBadge(task.urgency)}</td>
+                      <td className="p-4">{getStatusBadge(task.status)}</td>
+                      <td className="p-4 text-sm text-gray-700">
                         {task.assignedTo ? (
                           <div className="flex items-center space-x-1">
-                            <User className="h-3 w-3 sm:h-4 sm:w-4" />
-                            <span className="truncate max-w-[80px] sm:max-w-none">{task.assignedTo}</span>
+                            <User className="h-4 w-4" />
+                            <span>{task.assignedTo}</span>
                             {task.estimatedTime && (
-                              <span className="text-gray-500 text-xs">
+                              <span className="text-gray-500">
                                 ({task.estimatedTime} {t.minutes})
                               </span>
                             )}
@@ -366,12 +366,12 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
                           <span className="text-gray-400">-</span>
                         )}
                       </td>
-                      <td className="p-2 sm:p-4">
-                        <div className="flex items-center space-x-1 sm:space-x-2">
+                      <td className="p-4">
+                        <div className="flex items-center space-x-2">
                           <Dialog>
                             <DialogTrigger asChild>
-                              <Button variant="ghost" size="sm" className="hover:bg-teal-100 hover:text-teal-700 h-7 w-7 sm:h-8 sm:w-8 p-0">
-                                <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
+                              <Button variant="ghost" size="sm" className="hover:bg-teal-100 hover:text-teal-700">
+                                <Eye className="h-4 w-4" />
                               </Button>
                             </DialogTrigger>
                             <DialogContent className="max-w-md">
@@ -434,10 +434,10 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
                               variant="ghost"
                               size="sm"
                               onClick={() => handleTakeTask(task.id)}
-                              className="hover:bg-teal-100 hover:text-teal-700 h-7 w-7 sm:h-8 sm:w-8 p-0"
+                              className="hover:bg-teal-100 hover:text-teal-700"
                               title={t.takeTask}
                             >
-                              <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
+                              <Clock className="h-4 w-4" />
                             </Button>
                           )}
 
@@ -447,19 +447,19 @@ export default function TaskListPage({ tasks, language, onUpdateTask }: TaskList
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => handleMarkAsDone(task.id)}
-                                className="hover:bg-green-100 hover:text-green-700 h-7 w-7 sm:h-8 sm:w-8 p-0"
+                                className="hover:bg-green-100 hover:text-green-700"
                                 title={t.markAsDone}
                               >
-                                <Check className="h-3 w-3 sm:h-4 sm:w-4" />
+                                <Check className="h-4 w-4" />
                               </Button>
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => handleMarkAsNotDone(task.id)}
-                                className="hover:bg-red-100 hover:text-red-700 h-7 w-7 sm:h-8 sm:w-8 p-0"
+                                className="hover:bg-red-100 hover:text-red-700"
                                 title={t.markAsNotDone}
                               >
-                                <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                                <X className="h-4 w-4" />
                               </Button>
                             </>
                           )}
